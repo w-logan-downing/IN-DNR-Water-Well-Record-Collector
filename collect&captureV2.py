@@ -3,6 +3,7 @@ import pandas as pd #for reading the excel file for well IDs
 #note: pandas relies on xldr
 from tkinter import *
 from tkinter import filedialog
+from tkinter import ttk
 
 class Window(Frame):
     def __init__(self, master=None): #define the main window
@@ -18,6 +19,14 @@ class Window(Frame):
         #remove the grayed background to print report to a plain white sheet.
         self.options = {'no-background': ''}
 
+        #---Display instructions at top---#
+        #self.info = Label(self, text="Use the browse button to select a data source and the Collect Records button to select an output location.")
+        #self.info.pack(side=TOP)
+
+        #---Establish the progressbar---#
+        self.progress = ttk.Progressbar(self, orient='horizontal', length=200, mode='determinate')
+        self.progress.pack(side=BOTTOM)
+
     def init_window(self):
         self.master.title("IDEM Water Well Record Collector") #set the title of the window (located inside of the frame)
         self.pack(fill=BOTH, expand=1) #allow the window to occupy the whole frame
@@ -30,20 +39,13 @@ class Window(Frame):
         file.add_command(label='Exit', command=self.client_exit)
         mainMenu.add_cascade(label='File', menu=file)
 
-        #---Build out the menu button edit---#
-        #edit = Menu(mainMenu)
-        #edit.add_command(label='Undo')
-        #mainMenu.add_cascade(label='Edit', menu=edit)
-
-        #quitButton = Button(self, text='Exit', command=self.displayDir)
-        #quitButton.place(x=400, y=200)
         #---Build out the browse button to allow user to get data---#
         browseButton = Button(self, text='Browse', command=self.browseFunc)
-        browseButton.place(x=400, y=200)
+        browseButton.place(x=210, y=100)
 
         #---Build the start button---#
         startButton = Button(self, text="Collect Records", command=self.collect)
-        startButton.place(x=380, y=300)
+        startButton.place(x=210, y=150)
         
 
     #---Gets source data from user specified file---#
@@ -58,11 +60,13 @@ class Window(Frame):
 
     def collect(self):
         destination = filedialog.askdirectory()
+             
         for i in range(len(self.allWellIDs)):
             wellID = self.allWellIDs[i]
             url = 'https://secure.in.gov/apps/dnr/water/dnr_waterwell?refNo=' + wellID + '&_from=SUMMARY&_action=Details' #create the url to turn into a pdf
             fileDestination = destination + '/' + wellID + '.pdf' #append the well ID to the destination folder
             pdfkit.from_url(url, fileDestination , options= self.options, configuration=self.config) #get the webpage
+            progress['value'] += 1
 
         print("All PDF files have been saved to the specified folder")
         
@@ -71,7 +75,7 @@ class Window(Frame):
         exit()
 
 root = Tk()
-root.geometry("800x600") #set the default frame size
+root.geometry("320x320") #set the default frame size
 app = Window(root)
 
 root.mainloop() #starts the window
