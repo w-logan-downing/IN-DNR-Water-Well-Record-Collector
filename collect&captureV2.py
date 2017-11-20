@@ -20,12 +20,12 @@ class Window(Frame):
         self.options = {'no-background': ''}
 
         #---Display instructions at top---#
-        #self.info = Label(self, text="Use the browse button to select a data source and the Collect Records button to select an output location.")
-        #self.info.pack(side=TOP)
+        self.info = Label(self, text="Use the browse button to select a data source\nand the Collect Records button to select\nan output location.")
+        self.info.pack(side=TOP)
 
         #---Establish the progressbar---#
-        self.progress = ttk.Progressbar(self, orient='horizontal', length=200, mode='determinate')
-        self.progress.pack(side=BOTTOM)
+        self.progress = ttk.Progressbar(self, orient='horizontal', length=250, mode='determinate')
+        self.progress.pack(side=BOTTOM, pady=(0, 50))
 
     def init_window(self):
         self.master.title("IDEM Water Well Record Collector") #set the title of the window (located inside of the frame)
