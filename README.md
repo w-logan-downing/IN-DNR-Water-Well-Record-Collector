@@ -7,8 +7,9 @@ This program was built using python 3.6
 
 <h2>---SETUP---</h2>
 <ul>
-  <li>First, run pip install -r requirements.txt from the project folder to install the necessary dependencies.</li>
-  <li>Install wkhtmltopdf version 0.12.4. It should install into C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe -->If that doesn't occur, you will need to modify the self.config variable for the program to work.
+  <li>Install Python 3.6 from the python webpage. Make sure to selec the add to path checkbox at the start of the install.</li>
+  <li>Run pip install -r requirements.txt from a command line opened in the project folder to install the necessary dependencies.</li>
+  <li>Install wkhtmltopdf version 0.12.4 (https://wkhtmltopdf.org/downloads.html). It should install into C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe -->If that doesn't occur, you will need to modify the self.config variable for the program to work.
   <br>NOTE: On 64 bit systems, wkhtmltopdf will install in C:/Program Files (x86)/wkhtmltopdf/bin/wkhtmltopdf.exe, the self.config variable in the script will need to be updated to reflect this difference.
   </li>
 </ul>
