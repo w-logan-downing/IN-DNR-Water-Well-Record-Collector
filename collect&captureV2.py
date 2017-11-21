@@ -4,6 +4,7 @@ import pandas as pd #for reading the excel file for well IDs
 from tkinter import *
 from tkinter import filedialog
 from tkinter import ttk
+import webbrowser
 
 class Window(Frame):
     def __init__(self, master=None): #define the main window
@@ -15,6 +16,7 @@ class Window(Frame):
 
         #---Setup wkhtmltopdf options and configuration---#
         #specify the path to wkhtmltopdf for pdfkit
+        #(add (x86) for 64 bit systems)
         self.config = pdfkit.configuration(wkhtmltopdf=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe')
         #remove the grayed background to print report to a plain white sheet.
         self.options = {'no-background': ''}
@@ -24,8 +26,8 @@ class Window(Frame):
         self.info.pack(side=TOP)
 
         #---Establish the progressbar---#
-        self.progress = ttk.Progressbar(self, orient='horizontal', length=250, mode='determinate')
-        self.progress.pack(side=BOTTOM, pady=(0, 50))
+        #self.progress = ttk.Progressbar(self, orient='horizontal', length=250, mode='indeterminate')
+        #self.progress.pack(side=BOTTOM, pady=(0, 50))
 
     def init_window(self):
         self.master.title("IDEM Water Well Record Collector") #set the title of the window (located inside of the frame)
@@ -38,6 +40,9 @@ class Window(Frame):
         file = Menu(mainMenu) #define the instance of file
         file.add_command(label='Exit', command=self.client_exit)
         mainMenu.add_cascade(label='File', menu=file)
+
+        #--Build out the help button---#
+        mainMenu.add_command(label='Help', command=self.openURL) #goes to html doc
 
         #---Build out the browse button to allow user to get data---#
         browseButton = Button(self, text='Browse', command=self.browseFunc)
@@ -60,22 +65,40 @@ class Window(Frame):
 
     def collect(self):
         destination = filedialog.askdirectory()
-             
+
+        #self.progress.maximum = len(self.allWellIDs)
+        #self.progress.start()
+        #---Initialize a progress counter---#
+        counter = 0
+        self.filesConverted = Label(self, text= str(counter) + '/' + str(len(self.allWellIDs)))
+        self.filesConverted.pack(side=BOTTOM, pady=(0,10))
+
         for i in range(len(self.allWellIDs)):
             wellID = self.allWellIDs[i]
             url = 'https://secure.in.gov/apps/dnr/water/dnr_waterwell?refNo=' + wellID + '&_from=SUMMARY&_action=Details' #create the url to turn into a pdf
             fileDestination = destination + '/' + wellID + '.pdf' #append the well ID to the destination folder
             pdfkit.from_url(url, fileDestination , options= self.options, configuration=self.config) #get the webpage
-            progress['value'] += 1
+            #self.progress.step([])
+            self.filesConverted.pack_forget() #delete the current label for new label
+            #root.update() #update UI to remove
+            counter += 1
+            self.filesConverted = Label(self, text= str(counter) + '/' + str(len(self.allWellIDs)))
+            self.filesConverted.pack(side=BOTTOM, pady=(0,10))
+            root.update()
 
-        print("All PDF files have been saved to the specified folder")
+        #self.progress.stop()
+        self.completedText = Label(self, text="All PDF files have been saved to the specified folder")
+        self.completedText.pack(side=BOTTOM, pady=(0, 0))
         
 
     def client_exit(self):
         exit()
 
+    def openURL(self):
+        webbrowser.open("help.html")
+
 root = Tk()
-root.geometry("320x320") #set the default frame size
+root.geometry("320x280") #set the default frame size
 app = Window(root)
 
 root.mainloop() #starts the window
