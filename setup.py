@@ -19,7 +19,7 @@ setup(name = "Water Well Record Collection Tool" ,
                         os.path.join(PYTHON_INSTALL_DIR, 'DLLs', 'tk86t.dll'),
                         os.path.join(PYTHON_INSTALL_DIR, 'DLLs', 'tcl86t.dll'),
                   ],
-                  'packages': add_ons,  
+                  'packages': add_ons,
             }
       },
       executables = [Executable("collect-and-capture-v2.py")]
