@@ -1,4 +1,5 @@
 import pdfkit
+import numpy
 import pandas as pd #for reading the excel file for well IDs
 #note: pandas relies on xldr
 from tkinter import *
