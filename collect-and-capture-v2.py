@@ -6,6 +6,7 @@ from tkinter import *
 from tkinter import filedialog
 from tkinter import ttk
 import webbrowser
+import sys
 
 class Window(Frame):
     def __init__(self, master=None): #define the main window
@@ -18,7 +19,8 @@ class Window(Frame):
         #---Setup wkhtmltopdf options and configuration---#
         #specify the path to wkhtmltopdf for pdfkit
         #(add (x86) for 64 bit systems)
-        self.config = pdfkit.configuration(wkhtmltopdf=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe')
+        #self.config = pdfkit.configuration(wkhtmltopdf=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe')
+        self.config = pdfkit.configuration(wkhtmltopdf='wkhtmltopdf\\bin\\wkhtmltopdf.exe')
         #remove the grayed background to print report to a plain white sheet.
         self.options = {'no-background': ''}
 
@@ -93,7 +95,7 @@ class Window(Frame):
         
 
     def client_exit(self):
-        exit()
+        sys.exit()
 
     def openURL(self):
         webbrowser.open("help.html")
