@@ -29,6 +29,6 @@ setup(name = "Water Well Record Collection Tool" ,
             },
       },
       executables = [Executable("collect-and-capture-v2.py")],
-      #executables = [Executable("collect-and-capture-v2.py", base="win32GUI")],
+      #executables = [Executable("collect-and-capture-v2.py", base="Win32GUI")],
       #executables = [Executable("collect-and-capture-v2.py", base="Win32GUI", icon="logo.ico")]
       )
