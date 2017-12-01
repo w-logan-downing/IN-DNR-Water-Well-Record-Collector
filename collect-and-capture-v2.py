@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import pdfkit
 import numpy
 import pandas as pd #for reading the excel file for well IDs
@@ -54,7 +55,7 @@ class Window(Frame):
         #---Build the start button---#
         startButton = Button(self, text="Collect Records", command=self.collect)
         startButton.place(x=210, y=150)
-        
+
 
     #---Gets source data from user specified file---#
     def browseFunc(self):
@@ -92,7 +93,7 @@ class Window(Frame):
         #self.progress.stop()
         self.completedText = Label(self, text="All PDF files have been saved to the specified folder")
         self.completedText.pack(side=BOTTOM, pady=(0, 0))
-        
+
 
     def client_exit(self):
         sys.exit()
